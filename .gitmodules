@@ -1,0 +1,3 @@
+[submodule "anira"]
+	path = anira
+	url = https://github.com/tu-studio/anira
