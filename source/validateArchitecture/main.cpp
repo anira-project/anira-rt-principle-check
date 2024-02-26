@@ -45,7 +45,7 @@ std::vector<float> generateRandomAudioBuffer(size_t numSamples) {
     return buffer;
 }
 
-void callProcess(std::unique_ptr<anira::InferenceManager>& manager, std::vector<float>& bufferToProcess) {
+[[clang::realtime]] void callProcess(std::unique_ptr<anira::InferenceManager>& manager, std::vector<float>& bufferToProcess) {
     float* bufferPtr = bufferToProcess.data();
     manager->process(&bufferPtr, bufferToProcess.size());
 }
