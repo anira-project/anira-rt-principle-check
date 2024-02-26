@@ -7,7 +7,7 @@ option(BUILD_SHARED_LIBS "Build the library as a shared library" OFF)
 
 add_subdirectory(anira)
 
-add_executable(anira-rt-principle-check
+add_executable(validate-inference-engines
         source/validateInferenceEngines/main.cpp
         source/validateInferenceEngines/engines/EngineBaseVal.cpp
         source/validateInferenceEngines/engines/OnnxRuntimeVal.cpp
@@ -15,7 +15,7 @@ add_executable(anira-rt-principle-check
         source/validateInferenceEngines/engines/TFLiteVal.cpp
 )
 
-add_executable(validate-inference-engines
+add_executable(validate-anira
         source/validateArchitecture/main.cpp
 )
 
@@ -36,8 +36,8 @@ add_compile_definitions(
         STATEFULLSTM_MODELS_PATH_PYTORCH="${STATEFULLSTM_MODELS_PATH_PYTORCH}"
 )
 
-target_link_libraries(anira-rt-principle-check anira)
 target_link_libraries(validate-inference-engines anira)
+target_link_libraries(validate-anira anira)
 
 if (MSVC)
     file(GLOB_RECURSE INFERENCE_ENGINE_DLLS_ONNX "${ANIRA_ONNXRUNTIME_SHARED_LIB_PATH}/*.dll")
@@ -50,12 +50,16 @@ if (MSVC)
             ${INFERENCE_ENGINE_DLLS_LIBTORCH}
     )
 
-    foreach(DLL ${NECESSARY_DLLS})
-        message(STATUS "${DLL}")
-        add_custom_command(TARGET anira-rt-principle-check
-                PRE_BUILD
-                COMMAND ${CMAKE_COMMAND} -E copy_if_different
-                ${DLL}
-                $<TARGET_FILE_DIR:anira-rt-principle-check>)
+    set(TARGETS_NEEDING_DLLS validate-inference-engines validate-anira)
+
+    foreach(TARGET IN LISTS TARGETS_NEEDING_DLLS)
+        foreach(DLL IN LISTS NECESSARY_DLLS)
+            message(STATUS "Copying ${DLL} to target ${TARGET}")
+            add_custom_command(TARGET ${TARGET}
+                    PRE_BUILD
+                    COMMAND ${CMAKE_COMMAND} -E copy_if_different
+                    ${DLL}
+                    $<TARGET_FILE_DIR:${TARGET}>)
+        endforeach()
     endforeach()
 endif (MSVC)
