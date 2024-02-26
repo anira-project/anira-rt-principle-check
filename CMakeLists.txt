@@ -9,6 +9,10 @@ add_subdirectory(anira)
 
 add_executable(anira-rt-principle-check
         source/main.cpp
+        source/engines/EngineBaseVal.cpp
+        source/engines/OnnxRuntimeVal.cpp
+        source/engines/LibTorchVal.cpp
+        source/engines/TFLiteVal.cpp
 )
 
 

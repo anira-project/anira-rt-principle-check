@@ -11,7 +11,7 @@ int main() {
                                                              statefulRNNConfig};
 
     const size_t numberOfInferences = 10;
-    std::unique_ptr<EngineBase> engineToCheck {nullptr};
+    std::unique_ptr<EngineBaseVal> engineToCheck {nullptr};
 
     for (auto currentEngine : inferenceEngines) {
         for (auto& currentConfig : modelsToInference) {

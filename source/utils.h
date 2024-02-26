@@ -1,15 +1,11 @@
-//
-// Created by Valentin Ackva on 15/02/2024.
-//
-
 #ifndef ANIRA_RT_PRINCIPLE_CHECK_UTILS_H
 #define ANIRA_RT_PRINCIPLE_CHECK_UTILS_H
 
 #include <anira/anira.h>
-#include "engines/enginebase.h"
-#include "engines/libtorch.h"
-#include "engines/onnxruntime.h"
-#include "engines/tflite.h"
+#include "engines/EngineBaseVal.h"
+#include "engines/LibTorchVal.h"
+#include "engines/OnnxRuntimeVal.h"
+#include "engines/TFLiteVal.h"
 #include "../anira/extras/models/stateful-rnn/StatefulRNNConfig.h"
 #include "../anira/extras/models/hybrid-nn/HybridNNConfig.h"
 #include "../anira/extras/models/cnn/CNNConfig.h"
@@ -40,14 +36,14 @@ auto modelPath = [](anira::InferenceConfig& config, anira::InferenceBackend back
     }
 };
 
-std::unique_ptr<EngineBase> createInferenceEngine(anira::InferenceConfig currentConfig, anira::InferenceBackend currentEngine) {
+std::unique_ptr<EngineBaseVal> createInferenceEngine(anira::InferenceConfig currentConfig, anira::InferenceBackend currentEngine) {
     switch (currentEngine) {
         case anira::InferenceBackend::LIBTORCH:
-            return std::make_unique<LibTorch>(currentConfig);
+            return std::make_unique<LibTorchVal>(currentConfig);
         case anira::InferenceBackend::ONNX:
-            return std::make_unique<OnnxRuntime>(currentConfig);
+            return std::make_unique<OnnxRuntimeVal>(currentConfig);
         case anira::InferenceBackend::TFLITE:
-            return std::make_unique<TFLite>(currentConfig);
+            return std::make_unique<TFLiteVal>(currentConfig);
         default:
             throw std::invalid_argument("Unsupported inference engine");
     }
