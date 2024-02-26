@@ -8,13 +8,16 @@ option(BUILD_SHARED_LIBS "Build the library as a shared library" OFF)
 add_subdirectory(anira)
 
 add_executable(anira-rt-principle-check
-        source/main.cpp
-        source/engines/EngineBaseVal.cpp
-        source/engines/OnnxRuntimeVal.cpp
-        source/engines/LibTorchVal.cpp
-        source/engines/TFLiteVal.cpp
+        source/validateInferenceEngines/main.cpp
+        source/validateInferenceEngines/engines/EngineBaseVal.cpp
+        source/validateInferenceEngines/engines/OnnxRuntimeVal.cpp
+        source/validateInferenceEngines/engines/LibTorchVal.cpp
+        source/validateInferenceEngines/engines/TFLiteVal.cpp
 )
 
+add_executable(validate-inference-engines
+        source/validateArchitecture/main.cpp
+)
 
 set(GUITARLSTM_MODELS_PATH_TENSORFLOW "${CMAKE_CURRENT_SOURCE_DIR}/anira/extras/models/hybrid-nn/GuitarLSTM/tensorflow-version/models/")
 set(GUITARLSTM_MODELS_PATH_PYTORCH "${CMAKE_CURRENT_SOURCE_DIR}/anira/extras/models/hybrid-nn/GuitarLSTM/pytorch-version/models/")
@@ -34,6 +37,7 @@ add_compile_definitions(
 )
 
 target_link_libraries(anira-rt-principle-check anira)
+target_link_libraries(validate-inference-engines anira)
 
 if (MSVC)
     file(GLOB_RECURSE INFERENCE_ENGINE_DLLS_ONNX "${ANIRA_ONNXRUNTIME_SHARED_LIB_PATH}/*.dll")

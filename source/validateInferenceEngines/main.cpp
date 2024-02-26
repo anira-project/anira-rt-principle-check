@@ -1,5 +1,22 @@
 #include <iostream>
-#include "utils.h"
+#include "../utils.h"
+#include "engines/EngineBaseVal.h"
+#include "engines/LibTorchVal.h"
+#include "engines/OnnxRuntimeVal.h"
+#include "engines/TFLiteVal.h"
+
+std::unique_ptr<EngineBaseVal> createInferenceEngine(anira::InferenceConfig currentConfig, anira::InferenceBackend currentEngine) {
+    switch (currentEngine) {
+        case anira::InferenceBackend::LIBTORCH:
+            return std::make_unique<LibTorchVal>(currentConfig);
+        case anira::InferenceBackend::ONNX:
+            return std::make_unique<OnnxRuntimeVal>(currentConfig);
+        case anira::InferenceBackend::TFLITE:
+            return std::make_unique<TFLiteVal>(currentConfig);
+        default:
+            throw std::invalid_argument("Unsupported inference engine");
+    }
+};
 
 int main() {
     std::vector<anira::InferenceBackend> inferenceEngines = {anira::InferenceBackend::LIBTORCH,

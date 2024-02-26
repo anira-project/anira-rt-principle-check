@@ -1,7 +1,7 @@
 #ifndef ANIRA_RT_PRINCIPLE_CHECK_ENGINEBASEVAL_H
 #define ANIRA_RT_PRINCIPLE_CHECK_ENGINEBASEVAL_H
 
-#include <anira/anira.h>
+#include "anira/anira.h"
 
 class EngineBaseVal {
 public:
