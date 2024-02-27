@@ -45,7 +45,7 @@ std::vector<float> generateRandomAudioBuffer(size_t numSamples) {
     return buffer;
 }
 
-[[clang::realtime]] void callProcess(std::unique_ptr<anira::InferenceManager>& manager, std::vector<float>& bufferToProcess) {
+[[clang::realtime]] void callProcess(std::unique_ptr<anira::InferenceHandler>& manager, std::vector<float>& bufferToProcess) {
     float* bufferPtr = bufferToProcess.data();
     manager->process(&bufferPtr, bufferToProcess.size());
 }
@@ -59,23 +59,24 @@ int main() {
                                                              cnnConfig,
                                                              statefulRNNConfig};
 
-    auto bufferSizesToTest = generatePowersOfTwo(2, 131072);
+    auto bufferSizesToTest = generatePowersOfTwo(2048, 131072);
 
     std::vector<ModelConfig> combinedConfigs = {
-            ModelConfig(hybridNNConfig, HybridNNPrePostProcessor()),
             ModelConfig(cnnConfig, CNNPrePostProcessor()),
+            ModelConfig(hybridNNConfig, HybridNNPrePostProcessor()),
             ModelConfig(statefulRNNConfig, StatefulRNNPrePostProcessor())
     };
 
     const size_t numberOfInferences = 10;
-    std::unique_ptr<anira::InferenceManager> managerToCheck {nullptr};
+    std::unique_ptr<anira::InferenceHandler> handlerToCheck {nullptr};
 
     for (auto currentEngine : inferenceEngines) {
         for (auto& modelConfig : combinedConfigs) {
-            managerToCheck = std::make_unique<anira::InferenceManager>(modelConfig.processor, modelConfig.config);
+            handlerToCheck = std::make_unique<anira::InferenceHandler>(modelConfig.processor, modelConfig.config);
+            handlerToCheck->setInferenceBackend(currentEngine);
             for (auto bufferSize : bufferSizesToTest) {
                 anira::HostAudioConfig audioConfig {1, (size_t) bufferSize, 48000};
-                managerToCheck->prepare(audioConfig);
+                handlerToCheck->prepare(audioConfig);
                 auto timeInMs = (double) audioConfig.hostBufferSize / audioConfig.hostSampleRate * 1000.0;
                 for (size_t inferenceCount = 0; inferenceCount < numberOfInferences; ++inferenceCount) {
                     std::cout << "-------------------------------------------------------------" << std::endl;
@@ -87,7 +88,7 @@ int main() {
                     std::cout << "-- Inference: " << inferenceCount << std::endl;
                     std::cout << "-------------------------------------------------------------" << "\n" << std::endl;
                     auto bufferToProcess = generateRandomAudioBuffer((size_t) bufferSize);
-                    callProcess(managerToCheck, bufferToProcess);
+                    callProcess(handlerToCheck, bufferToProcess);
                     std::this_thread::sleep_for(std::chrono::duration<double, std::milli>(timeInMs));
                 }
             }
