@@ -1,7 +1,6 @@
 #ifndef ANIRA_RT_PRINCIPLE_CHECK_TFLITEVAL_H
 #define ANIRA_RT_PRINCIPLE_CHECK_TFLITEVAL_H
 
-#include <comutil.h>
 #include "EngineBaseVal.h"
 
 class TFLiteVal : public EngineBaseVal {
