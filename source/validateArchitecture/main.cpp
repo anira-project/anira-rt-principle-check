@@ -13,10 +13,10 @@
 #include "../../anira/extras/models/cnn/CNNPrePostProcessor.h"
 
 struct ModelConfig {
-    anira::InferenceConfig config;
-    anira::PrePostProcessor processor;
+    anira::InferenceConfig& config;
+    anira::PrePostProcessor& processor;
 
-    ModelConfig(anira::InferenceConfig c, anira::PrePostProcessor p) : config(c), processor(p) {}
+    ModelConfig(anira::InferenceConfig& c, anira::PrePostProcessor& p) : config(c), processor(p) {}
 };
 
 std::vector<int> generatePowersOfTwo(int min, int max) {
@@ -50,6 +50,10 @@ std::vector<float> generateRandomAudioBuffer(size_t numSamples) {
     manager->process(&bufferPtr, bufferToProcess.size());
 }
 
+CNNPrePostProcessor cnnPrePostProcessor;
+HybridNNPrePostProcessor hybridNnPrePostProcessor;
+StatefulRNNPrePostProcessor statefulRnnPrePostProcessor;
+
 int main() {
     std::vector<anira::InferenceBackend> inferenceEngines = {anira::InferenceBackend::LIBTORCH,
                                                              anira::InferenceBackend::ONNX,
@@ -59,12 +63,12 @@ int main() {
                                                              cnnConfig,
                                                              statefulRNNConfig};
 
-    auto bufferSizesToTest = generatePowersOfTwo(2048, 131072);
+    auto bufferSizesToTest = generatePowersOfTwo(2048, 8192);
 
     std::vector<ModelConfig> combinedConfigs = {
-            ModelConfig(cnnConfig, CNNPrePostProcessor()),
-            ModelConfig(hybridNNConfig, HybridNNPrePostProcessor()),
-            ModelConfig(statefulRNNConfig, StatefulRNNPrePostProcessor())
+            ModelConfig(cnnConfig, cnnPrePostProcessor),
+            ModelConfig(hybridNNConfig, hybridNnPrePostProcessor),
+            ModelConfig(statefulRNNConfig, statefulRnnPrePostProcessor)
     };
 
     const size_t numberOfInferences = 10;
@@ -72,26 +76,27 @@ int main() {
 
     for (auto currentEngine : inferenceEngines) {
         for (auto& modelConfig : combinedConfigs) {
+            if (handlerToCheck != nullptr) handlerToCheck.reset();
             handlerToCheck = std::make_unique<anira::InferenceHandler>(modelConfig.processor, modelConfig.config);
             handlerToCheck->setInferenceBackend(currentEngine);
+            std::cout << "-------------------------------------------------------------" << std::endl;
+            std::cout << "-------------- Anira-Real-Time-Principle-Check --------------" << std::endl;
+            std::cout << "-------------------------------------------------------------" << std::endl;
+            std::cout << "-- Inference Engine: " << engineEnumToString(currentEngine) << std::endl;
+            std::cout << "-- Model: " << modelPath(modelConfig.config, currentEngine) << std::endl;
             for (auto bufferSize : bufferSizesToTest) {
+                std::cout << "-- Buffer Size: " << bufferSize << std::endl;
                 anira::HostAudioConfig audioConfig {1, (size_t) bufferSize, 48000};
                 handlerToCheck->prepare(audioConfig);
                 auto timeInMs = (double) audioConfig.hostBufferSize / audioConfig.hostSampleRate * 1000.0;
                 for (size_t inferenceCount = 0; inferenceCount < numberOfInferences; ++inferenceCount) {
-                    std::cout << "-------------------------------------------------------------" << std::endl;
-                    std::cout << "-------------- Anira-Real-Time-Principle-Check --------------" << std::endl;
-                    std::cout << "-------------------------------------------------------------" << std::endl;
-                    std::cout << "-- Inference Engine: " << engineEnumToString(currentEngine) << std::endl;
-                    std::cout << "-- Model: " << modelPath(modelConfig.config, currentEngine) << std::endl;
-                    std::cout << "-- Buffer Size: " << bufferSize << std::endl;
                     std::cout << "-- Inference: " << inferenceCount << std::endl;
-                    std::cout << "-------------------------------------------------------------" << "\n" << std::endl;
                     auto bufferToProcess = generateRandomAudioBuffer((size_t) bufferSize);
                     callProcess(handlerToCheck, bufferToProcess);
                     std::this_thread::sleep_for(std::chrono::duration<double, std::milli>(timeInMs));
                 }
             }
+            std::cout << "-------------------------------------------------------------" << "\n" << std::endl;
         }
     }
 
