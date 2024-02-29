@@ -5,6 +5,9 @@ set(CMAKE_CXX_STANDARD 20)
 
 option(BUILD_SHARED_LIBS "Build the library as a shared library" OFF)
 
+# TODO this is a workaround for linux
+include(anira/cmake/SetupLibTorch.cmake)
+
 add_subdirectory(anira)
 
 add_executable(validate-inference-engines

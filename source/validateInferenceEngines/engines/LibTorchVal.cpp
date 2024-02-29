@@ -8,7 +8,7 @@ LibTorchVal::LibTorchVal(anira::InferenceConfig &conf) : EngineBaseVal(conf) {
     _putenv(mkl_num_threads.data());
 #else
     putenv(omp_num_threads.data());
-        putenv(mkl_num_threads.data());
+    putenv(mkl_num_threads.data());
 #endif
 
     module = torch::jit::load(config.m_model_path_torch);
