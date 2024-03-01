@@ -22,6 +22,10 @@ add_executable(validate-anira
         source/validateArchitecture/main.cpp
 )
 
+add_executable(simple-real-time-violations
+        source/simpleRealTimeViolation/main.cpp
+)
+
 set(GUITARLSTM_MODELS_PATH_TENSORFLOW "${CMAKE_CURRENT_SOURCE_DIR}/anira/extras/models/hybrid-nn/GuitarLSTM/tensorflow-version/models/")
 set(GUITARLSTM_MODELS_PATH_PYTORCH "${CMAKE_CURRENT_SOURCE_DIR}/anira/extras/models/hybrid-nn/GuitarLSTM/pytorch-version/models/")
 set(STEERABLENAFX_MODELS_PATH_TENSORFLOW "${CMAKE_CURRENT_SOURCE_DIR}/anira/extras/models/cnn/steerable-nafx/models/")
