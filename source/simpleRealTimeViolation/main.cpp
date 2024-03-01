@@ -41,14 +41,6 @@ std::mutex audioMutex;
     }
 }
 
-[[clang::realtime]] void normalizeBuffer(std::vector<float>& buffer) {
-    float maxVal = *std::max_element(buffer.begin(), buffer.end());
-    if (maxVal == 0) return;
-    for (auto& sample : buffer) {
-        sample /= maxVal;
-    }
-}
-
 [[clang::realtime]] void clearBuffer(std::vector<float>& buffer) {
     std::fill(buffer.begin(), buffer.end(), 0.0f);
 }
@@ -86,9 +78,6 @@ int main() {
 
     std::cout << "Inverting buffer values..." << std::endl;
     invertBuffer(audioBuffer);
-
-    std::cout << "Normalizing buffer..." << std::endl;
-    normalizeBuffer(audioBuffer);
 
     std::cout << "Clearing buffer..." << std::endl;
     clearBuffer(audioBuffer);
