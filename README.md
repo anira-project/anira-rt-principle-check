@@ -37,6 +37,7 @@ apt install libasound2-dev libjack-jackd2-dev \
 Build:
 ```bash
 cd /anira-rt-principle-check/anira-rt-principle-check/
+git submodule update --init --recursive
 cmake . -B cmake-build-release -DCMAKE_BUILD_TYPE=Release
 
 cmake --build cmake-build-release --config Release --target validate-anira
