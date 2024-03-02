@@ -5,6 +5,7 @@
 #include <cstdlib>
 #include <chrono>
 #include <thread>
+#include <algorithm>
 
 #include "../utils.h"
 
@@ -23,7 +24,7 @@ std::vector<int> generatePowersOfTwo(int min, int max) {
     std::vector<int> powers;
 
     int startExp = std::ceil(std::log2(min));
-    startExp = std::max(startExp, 0);
+    startExp = max(startExp, 0);
 
     for (int exp = startExp; ; ++exp) {
         int power = std::pow(2, exp);

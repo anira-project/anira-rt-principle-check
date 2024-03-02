@@ -20,8 +20,6 @@ include(anira/cmake/SetupLibTorch.cmake)
 include(anira/cmake/SetupOnnxRuntime.cmake)
 include(anira/cmake/SetupTensorflowLite.cmake)
 
-
-
 add_subdirectory(anira)
 
 add_executable(validate-inference-engines
