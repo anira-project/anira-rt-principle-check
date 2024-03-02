@@ -2,6 +2,7 @@
 #define ANIRA_RT_PRINCIPLE_CHECK_ONNXRUNTIMEVAL_H
 
 #include "EngineBaseVal.h"
+#include <onnxruntime_cxx_api.h>
 
 class OnnxRuntimeVal : public EngineBaseVal {
 public:

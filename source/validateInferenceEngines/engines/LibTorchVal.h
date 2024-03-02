@@ -2,6 +2,7 @@
 #define ANIRA_RT_PRINCIPLE_CHECK_LIBTORCHVAL_H
 
 #include "EngineBaseVal.h"
+#include <torch/script.h>
 
 class LibTorchVal : public EngineBaseVal {
 public:
