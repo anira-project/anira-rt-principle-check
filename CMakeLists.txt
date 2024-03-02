@@ -32,7 +32,7 @@ add_executable(validate-inference-engines
 
 set_target_properties(validate-inference-engines PROPERTIES
         CXX_STANDARD 17
-        CXX_EXTENSIONS ON
+        CXX_EXTENSIONS OFF
 )
 
 add_executable(validate-anira
