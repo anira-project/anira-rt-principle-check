@@ -1,6 +1,6 @@
 #include "LibTorchVal.h"
 
-LibTorchVal::LibTorchVal(anira::InferenceConfig &conf) : EngineBaseVal(conf) {
+LibTorchVal::LibTorchVal(CustomInferenceConfig &conf) : EngineBaseVal(conf) {
     std::string omp_num_threads = "OMP_NUM_THREADS=1";
     std::string mkl_num_threads = "MKL_NUM_THREADS=1";
 #if WIN32

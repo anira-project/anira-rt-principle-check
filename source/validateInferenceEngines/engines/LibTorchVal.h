@@ -6,7 +6,7 @@
 
 class LibTorchVal : public EngineBaseVal {
 public:
-    LibTorchVal(anira::InferenceConfig& conf);
+    LibTorchVal(CustomInferenceConfig& conf);
 
     void executeInference() override;
     [[clang::realtime]] void inference();

@@ -1,15 +1,15 @@
 #ifndef ANIRA_RT_PRINCIPLE_CHECK_ENGINEBASEVAL_H
 #define ANIRA_RT_PRINCIPLE_CHECK_ENGINEBASEVAL_H
 
-#include "anira/anira.h"
+#include "../evalModels/CustomInferenceConfig.h"
 
 class EngineBaseVal {
 public:
-    EngineBaseVal(anira::InferenceConfig& conf);
+    EngineBaseVal(CustomInferenceConfig& conf);
     virtual void executeInference() = 0;
 
 protected:
-    anira::InferenceConfig& config;
+    CustomInferenceConfig& config;
 
     std::vector<float> inputData;
     std::vector<float> outputData;

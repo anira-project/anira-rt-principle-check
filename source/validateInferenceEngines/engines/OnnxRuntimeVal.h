@@ -6,7 +6,7 @@
 
 class OnnxRuntimeVal : public EngineBaseVal {
 public:
-    OnnxRuntimeVal(anira::InferenceConfig& conf);
+    OnnxRuntimeVal(CustomInferenceConfig& conf);
 
     void executeInference() override;
     [[clang::realtime]] void inference();

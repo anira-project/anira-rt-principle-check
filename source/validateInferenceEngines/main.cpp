@@ -1,17 +1,54 @@
 #include <iostream>
-#include "../utils.h"
+
+#include "evalModels/CustomCnnInferenceConfig.h"
+#include "evalModels/CustomHybridNNConfig.h"
+#include "evalModels/CustomStatefulRNNConfig.h"
+
 #include "engines/EngineBaseVal.h"
 #include "engines/LibTorchVal.h"
 #include "engines/OnnxRuntimeVal.h"
 #include "engines/TFLiteVal.h"
 
-std::unique_ptr<EngineBaseVal> createInferenceEngine(anira::InferenceConfig currentConfig, anira::InferenceBackend currentEngine) {
+enum InferenceBackend {
+    LIBTORCH,
+    ONNX,
+    TFLITE
+};
+
+auto modelPath = [](CustomInferenceConfig& config, InferenceBackend backend) -> std::string {
+    switch (backend) {
+        case InferenceBackend::LIBTORCH:
+            return config.m_model_path_torch;
+        case InferenceBackend::ONNX:
+            return config.m_model_path_onnx;
+        case InferenceBackend::TFLITE:
+            return config.m_model_path_tflite;
+        default:
+            return "Unknown";
+    }
+};
+
+
+auto engineEnumToString = [](InferenceBackend backend) -> std::string {
+    switch (backend) {
+        case InferenceBackend::LIBTORCH:
+            return "LIBTORCH";
+        case InferenceBackend::ONNX:
+            return "ONNX";
+        case InferenceBackend::TFLITE:
+            return "TFLITE";
+        default:
+            return "Unknown";
+    }
+};
+
+std::unique_ptr<EngineBaseVal> createInferenceEngine(CustomInferenceConfig currentConfig, InferenceBackend currentEngine) {
     switch (currentEngine) {
-        case anira::InferenceBackend::LIBTORCH:
+        case InferenceBackend::LIBTORCH:
             return std::make_unique<LibTorchVal>(currentConfig);
-        case anira::InferenceBackend::ONNX:
+        case InferenceBackend::ONNX:
             return std::make_unique<OnnxRuntimeVal>(currentConfig);
-        case anira::InferenceBackend::TFLITE:
+        case InferenceBackend::TFLITE:
             return std::make_unique<TFLiteVal>(currentConfig);
         default:
             throw std::invalid_argument("Unsupported inference engine");
@@ -19,13 +56,13 @@ std::unique_ptr<EngineBaseVal> createInferenceEngine(anira::InferenceConfig curr
 };
 
 int main() {
-    std::vector<anira::InferenceBackend> inferenceEngines = {anira::InferenceBackend::LIBTORCH,
-                                                             anira::InferenceBackend::ONNX,
-                                                             anira::InferenceBackend::TFLITE};
+    std::vector<InferenceBackend> inferenceEngines = {InferenceBackend::LIBTORCH,
+                                                      InferenceBackend::ONNX,
+                                                      InferenceBackend::TFLITE};
 
-    std::vector<anira::InferenceConfig> modelsToInference = {hybridNNConfig,
-                                                             cnnConfig,
-                                                             statefulRNNConfig};
+    std::vector<CustomInferenceConfig> modelsToInference = {hybridNNConfig,
+                                                            cnnConfig,
+                                                            statefulRNNConfig};
 
     const size_t numberOfInferences = 10;
     std::unique_ptr<EngineBaseVal> engineToCheck {nullptr};

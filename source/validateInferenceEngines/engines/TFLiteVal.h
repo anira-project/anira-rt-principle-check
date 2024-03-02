@@ -6,7 +6,7 @@
 
 class TFLiteVal : public EngineBaseVal {
 public:
-    TFLiteVal(anira::InferenceConfig& config);
+    TFLiteVal(CustomInferenceConfig& config);
     ~TFLiteVal();
 
     void executeInference() override;

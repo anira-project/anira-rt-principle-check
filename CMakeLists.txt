@@ -30,6 +30,11 @@ add_executable(validate-inference-engines
         source/validateInferenceEngines/engines/TFLiteVal.cpp
 )
 
+set_target_properties(validate-inference-engines PROPERTIES
+        CXX_STANDARD 17
+        CXX_EXTENSIONS ON
+)
+
 add_executable(validate-anira
         source/validateArchitecture/main.cpp
 )

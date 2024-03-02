@@ -1,6 +1,6 @@
 #include "OnnxRuntimeVal.h"
 
-OnnxRuntimeVal::OnnxRuntimeVal(anira::InferenceConfig &conf) : EngineBaseVal(conf),
+OnnxRuntimeVal::OnnxRuntimeVal(CustomInferenceConfig &conf) : EngineBaseVal(conf),
                                                                memory_info(Ort::MemoryInfo::CreateCpu(OrtDeviceAllocator, OrtMemTypeCPU))
 {
     session_options.SetIntraOpNumThreads(1);

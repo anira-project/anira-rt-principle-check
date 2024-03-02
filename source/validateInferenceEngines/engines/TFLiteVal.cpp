@@ -1,6 +1,6 @@
 #include "TFLiteVal.h"
 
-TFLiteVal::TFLiteVal(anira::InferenceConfig &config) : EngineBaseVal(config) {
+TFLiteVal::TFLiteVal(CustomInferenceConfig &config) : EngineBaseVal(config) {
     model = TfLiteModelCreateFromFile(config.m_model_path_tflite.c_str());
     options = TfLiteInterpreterOptionsCreate();
     interpreter = TfLiteInterpreterCreate(model, options);

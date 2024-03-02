@@ -24,7 +24,11 @@ std::vector<int> generatePowersOfTwo(int min, int max) {
     std::vector<int> powers;
 
     int startExp = std::ceil(std::log2(min));
+#if WIN32
     startExp = max(startExp, 0);
+#else
+    startExp = std::max(startExp, 0);
+#endif
 
     for (int exp = startExp; ; ++exp) {
         int power = std::pow(2, exp);
