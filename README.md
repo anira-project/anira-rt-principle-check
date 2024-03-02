@@ -40,12 +40,15 @@ cd /anira-rt-principle-check/anira-rt-principle-check/
 git submodule update --init --recursive
 cmake . -B cmake-build-release -DCMAKE_BUILD_TYPE=Release
 
+cmake --build cmake-build-release --config Release --target simple-real-time-violations
 cmake --build cmake-build-release --config Release --target validate-anira
 cmake --build cmake-build-release --config Release --target validate-inference-engines
 ```
 Execute:
 ```bash
-TODO
+RADSAN_ERROR_MODE=continue ./simple-real-time-violations 2>&1 | tee simple-real-time-violations.txt
+RADSAN_ERROR_MODE=continue ./validate-anira 2>&1 | tee validate-anira.txt
+RADSAN_ERROR_MODE=continue ./validate-inference-engines 2>&1 | tee validate-inference-engines.txt
 ```
 
 ## Contributors
