@@ -79,7 +79,7 @@ int main() {
         for (auto& modelConfig : combinedConfigs) {
             if (handlerToCheck != nullptr) handlerToCheck.reset();
             handlerToCheck = std::make_unique<anira::InferenceHandler>(modelConfig.processor, modelConfig.config);
-            handlerToCheck->setInferenceBackend(currentEngine);
+            handlerToCheck->setInferenceBackend(anira::InferenceBackend::NONE);
             std::cout << "-------------------------------------------------------------" << std::endl;
             std::cout << "-------------- Anira-Real-Time-Principle-Check --------------" << std::endl;
             std::cout << "-------------------------------------------------------------" << std::endl;
@@ -89,12 +89,10 @@ int main() {
                 std::cout << "-- Buffer Size: " << bufferSize << std::endl;
                 anira::HostAudioConfig audioConfig {1, (size_t) bufferSize, 48000};
                 handlerToCheck->prepare(audioConfig);
-                auto timeInMs = (double) audioConfig.hostBufferSize / audioConfig.hostSampleRate * 1000.0;
                 for (size_t inferenceCount = 0; inferenceCount < numberOfInferences; ++inferenceCount) {
                     std::cout << "-- Inference: " << inferenceCount << std::endl;
                     auto bufferToProcess = generateRandomAudioBuffer((size_t) bufferSize);
                     callProcess(handlerToCheck, bufferToProcess);
-                    std::this_thread::sleep_for(std::chrono::duration<double, std::milli>(timeInMs));
                 }
             }
             std::cout << "-------------------------------------------------------------" << "\n" << std::endl;
