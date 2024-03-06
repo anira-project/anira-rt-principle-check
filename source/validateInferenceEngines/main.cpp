@@ -56,8 +56,8 @@ std::unique_ptr<EngineBaseVal> createInferenceEngine(CustomInferenceConfig curre
 };
 
 int main() {
-    std::vector<InferenceBackend> inferenceEngines = {InferenceBackend::LIBTORCH,
-                                                      InferenceBackend::ONNX,
+    std::vector<InferenceBackend> inferenceEngines = {/*InferenceBackend::LIBTORCH,
+                                                      InferenceBackend::ONNX,*/
                                                       InferenceBackend::TFLITE};
 
     std::vector<CustomInferenceConfig> modelsToInference = {hybridNNConfig,
