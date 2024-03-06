@@ -12,7 +12,6 @@ option(ANIRA_DEBUG_MODEL_EVALUATION "Enables the complete anira::InferenceConfig
 add_compile_options(-fsanitize=realtime)
 add_link_options(-fsanitize=realtime)
 
-# TODO this is a workaround for linux
 set(BACKEND_BUILD_HEADER_DIR)
 set(BACKEND_BUILD_LIBRARY_DIRS)
 
