@@ -45,9 +45,9 @@ cmake --build cmake-build-release --config Release --target validate-inference-e
 ```
 Execute:
 ```bash
-RADSAN_ERROR_MODE=continue ./cmake-build-release/simple-real-time-violations 2>&1 | tee simple-real-time-violations.txt
-RADSAN_ERROR_MODE=continue ./cmake-build-release/validate-anira 2>&1 | tee validate-anira.txt
-RADSAN_ERROR_MODE=continue ./cmake-build-release/validate-inference-engines 2>&1 | tee validate-inference-engines.txt
+RADSAN_ERROR_MODE=continue ./cmake-build-release/simple-real-time-violations 2>&1 | tee cmake-build-release/simple-real-time-violations.txt
+RADSAN_ERROR_MODE=continue ./cmake-build-release/validate-anira 2>&1 | tee cmake-build-release/validate-anira.txt
+RADSAN_ERROR_MODE=continue ./cmake-build-release/validate-inference-engines 2>&1 | tee cmake-build-release/validate-inference-engines.txt
 ```
 
 ## Contributors
