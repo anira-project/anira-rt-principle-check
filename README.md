@@ -36,6 +36,7 @@ apt-get update && apt-get install -y git cmake vim
 
 Build inside docker:
 ```
+cd anira-rt-principle-check/anira-rt-principle-check/
 cmake . -B cmake-build-release -DCMAKE_BUILD_TYPE=Release
 
 cmake --build cmake-build-release --config Release --target simple-real-time-violations
