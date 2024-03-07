@@ -55,5 +55,5 @@ RADSAN_ERROR_MODE=continue ./cmake-build-release/validate-inference-engines 2>&1
 - [Fares Schulz](https://github.com/faressc)
 
 ## License
-This project is licensed under the [MIT License](LICENSE).
+This project is licensed under [Apache-2.0](LICENSE).
 
