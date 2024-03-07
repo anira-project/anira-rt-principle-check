@@ -1,15 +1,7 @@
 #include "LibTorchVal.h"
 
 LibTorchVal::LibTorchVal(CustomInferenceConfig &conf) : EngineBaseVal(conf) {
-    std::string omp_num_threads = "OMP_NUM_THREADS=1";
-    std::string mkl_num_threads = "MKL_NUM_THREADS=1";
-#if WIN32
-    _putenv(omp_num_threads.data());
-    _putenv(mkl_num_threads.data());
-#else
-    putenv(omp_num_threads.data());
-    putenv(mkl_num_threads.data());
-#endif
+    torch::set_num_threads(1);
 
     module = torch::jit::load(config.m_model_path_torch);
     shape = config.m_model_input_shape_torch;

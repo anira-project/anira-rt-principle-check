@@ -3,6 +3,7 @@
 
 #include "EngineBaseVal.h"
 #include <torch/script.h>
+#include <torch/torch.h>
 
 class LibTorchVal : public EngineBaseVal {
 public:
