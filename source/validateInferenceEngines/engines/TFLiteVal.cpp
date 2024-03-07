@@ -3,8 +3,8 @@
 TFLiteVal::TFLiteVal(CustomInferenceConfig &config) : EngineBaseVal(config) {
     model = TfLiteModelCreateFromFile(config.m_model_path_tflite.c_str());
     options = TfLiteInterpreterOptionsCreate();
-    interpreter = TfLiteInterpreterCreate(model, options);
     TfLiteInterpreterOptionsSetNumThreads(options, 1);
+    interpreter = TfLiteInterpreterCreate(model, options);
     TfLiteInterpreterAllocateTensors(interpreter);
     inputTensor = TfLiteInterpreterGetInputTensor(interpreter, 0);
 }
