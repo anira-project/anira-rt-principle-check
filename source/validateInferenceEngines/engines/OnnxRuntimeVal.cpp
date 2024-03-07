@@ -33,7 +33,7 @@ OnnxRuntimeVal::OnnxRuntimeVal(CustomInferenceConfig &conf) : EngineBaseVal(conf
 void OnnxRuntimeVal::executeInference() {
     auto audioInputPtr = inputTensor[0].GetTensorMutableData<float>();
     for (size_t i = 0; i < inputSize; i++) {
-        audioInputPtr[0] = (float) i * 0.000001f;
+        audioInputPtr[i] = (float) i * 0.000001f;
     }
 
     inference();
