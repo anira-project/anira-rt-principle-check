@@ -1,6 +1,6 @@
 # Anira Real-time Principle Check
 ## Introduction
-This repository serves as a supplementary resource for the [anira library](https://github.com/tu-studio/anira), an architecture for real-time inference in real-time audio application.
+This repository serves as a supplementary resource for the [anira library](https://github.com/tu-studio/anira), an architecture for neural network inference in real-time audio application.
 
 **This repository contains two validation tests / builds:**
  - **validate-anira:** validate real-time saftey of the proposed architecture of [anira](https://github.com/tu-studio/anira)
