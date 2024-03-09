@@ -32,7 +32,7 @@ Prepare docker:
 sudo docker run -v  $(pwd):/anira-rt-principle-check -it realtimesanitizer/radsan-clang /bin/bash
 
 #Install necessary dependencies:
-apt-get update && apt-get install -y git cmake vim
+apt-get update && apt-get install -y git cmake
 ```
 
 Build inside docker:
