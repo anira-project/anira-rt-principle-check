@@ -56,15 +56,15 @@ std::unique_ptr<EngineBaseVal> createInferenceEngine(CustomInferenceConfig curre
 };
 
 int main() {
-    std::vector<InferenceBackend> inferenceEngines = {/*InferenceBackend::LIBTORCH,
-                                                      InferenceBackend::ONNX,*/
+    std::vector<InferenceBackend> inferenceEngines = {InferenceBackend::LIBTORCH,
+                                                      InferenceBackend::ONNX,
                                                       InferenceBackend::TFLITE};
 
     std::vector<CustomInferenceConfig> modelsToInference = {hybridNNConfig,
                                                             cnnConfig,
                                                             statefulRNNConfig};
 
-    const size_t numberOfInferences = 10;
+    const size_t numberOfInferences = 50;
     std::unique_ptr<EngineBaseVal> engineToCheck {nullptr};
 
     for (auto currentEngine : inferenceEngines) {
