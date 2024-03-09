@@ -4,24 +4,24 @@
 #include "CustomInferenceConfig.h"
 
 static CustomInferenceConfig hybridNNConfig(
-        GUITARLSTM_MODELS_PATH_PYTORCH + std::string("model_0/model_0-streaming.pt"),
-        {128, 1, 150},
-        {128, 1},
-        GUITARLSTM_MODELS_PATH_TENSORFLOW + std::string("model_0/model_0-tflite-streaming.onnx"),
-        {128, 150, 1},
-        {128, 1},
-        GUITARLSTM_MODELS_PATH_TENSORFLOW + std::string("model_0/model_0-streaming.tflite"),
-        {128, 150, 1},
-        {128, 1},
-        128,
+        STATEFULLSTM_MODELS_PATH_PYTORCH + std::string("model_0/stateful-lstm.pt"),
+        {2048, 1, 1},
+        {2048, 1, 1},
+        STATEFULLSTM_MODELS_PATH_PYTORCH + std::string("model_0/stateful-lstm-libtorch.onnx"),
+        {2048, 1, 1},
+        {2048, 1, 1},
+        STATEFULLSTM_MODELS_PATH_TENSORFLOW + std::string("model_0/stateful-lstm.tflite"),
+        {1, 2048, 1},
+        {1, 2048, 1},
         1,
-        150,
-        1,
-        256,
+        2048,
+        2048,
+        2048,
+        2048,
         0,
         false,
         0.5f,
-        false
+        true
 );
 
 
