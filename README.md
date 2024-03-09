@@ -23,6 +23,7 @@ docker pull realtimesanitizer/radsan-clang
 Clone repository and get submodules:
 ```bash
 git clone --recursive https://github.com/tu-studio/anira-rt-principle-check/
+cd anira-rt-principle-check
 ```
 
 Prepare docker:
@@ -36,7 +37,7 @@ apt-get update && apt-get install -y git cmake vim
 
 Build inside docker:
 ```
-cd anira-rt-principle-check/anira-rt-principle-check/
+cd anira-rt-principle-check/
 cmake . -B cmake-build-release -DCMAKE_BUILD_TYPE=Release
 
 cmake --build cmake-build-release --config Release --target simple-real-time-violations
