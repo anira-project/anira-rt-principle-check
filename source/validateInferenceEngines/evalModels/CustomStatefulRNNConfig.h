@@ -4,13 +4,13 @@
 #include "CustomInferenceConfig.h"
 
 static CustomInferenceConfig statefulRNNConfig(
-        STATEFULLSTM_MODELS_PATH_PYTORCH + std::string("model_0/stateful-lstm.pt"),
+        STATEFULLSTM_MODELS_PATH_PYTORCH + std::string("model_0/stateful-lstm-dynamic.pt"),
         {2048, 1, 1},
         {2048, 1, 1},
         STATEFULLSTM_MODELS_PATH_PYTORCH + std::string("model_0/stateful-lstm-libtorch.onnx"),
         {2048, 1, 1},
         {2048, 1, 1},
-        STATEFULLSTM_MODELS_PATH_TENSORFLOW + std::string("model_0/stateful-lstm.tflite"),
+        STATEFULLSTM_MODELS_PATH_TENSORFLOW + std::string("model_0/stateful-lstm-dynamic.tflite"),
         {1, 2048, 1},
         {1, 2048, 1},
         1,

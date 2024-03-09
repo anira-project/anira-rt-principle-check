@@ -4,13 +4,13 @@
 #include "CustomInferenceConfig.h"
 
 static CustomInferenceConfig hybridNNConfig(
-        STATEFULLSTM_MODELS_PATH_PYTORCH + std::string("model_0/stateful-lstm.pt"),
+        GUITARLSTM_MODELS_PATH_PYTORCH + std::string("model_0/GuitarLSTM-dynamic.pt"),
         {2048, 1, 1},
         {2048, 1, 1},
-        STATEFULLSTM_MODELS_PATH_PYTORCH + std::string("model_0/stateful-lstm-libtorch.onnx"),
+        GUITARLSTM_MODELS_PATH_PYTORCH + std::string("model_0/GuitarLSTM-libtorch-dynamic.onnx"),
         {2048, 1, 1},
         {2048, 1, 1},
-        STATEFULLSTM_MODELS_PATH_TENSORFLOW + std::string("model_0/stateful-lstm.tflite"),
+        GUITARLSTM_MODELS_PATH_TENSORFLOW + std::string("model_0/GuitarLSTM-2048.tflite"),
         {1, 2048, 1},
         {1, 2048, 1},
         1,
