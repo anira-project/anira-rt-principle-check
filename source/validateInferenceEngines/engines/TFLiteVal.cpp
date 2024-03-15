@@ -5,6 +5,7 @@ TFLiteVal::TFLiteVal(CustomInferenceConfig &config) : EngineBaseVal(config) {
     options = TfLiteInterpreterOptionsCreate();
     TfLiteInterpreterOptionsSetNumThreads(options, 1);
     interpreter = TfLiteInterpreterCreate(model, options);
+    TfLiteInterpreterResizeInputTensor(interpreter, 0, config.m_model_input_shape_tflite.data(), config.m_model_input_shape_tflite.size());
     TfLiteInterpreterAllocateTensors(interpreter);
     inputTensor = TfLiteInterpreterGetInputTensor(interpreter, 0);
 }
